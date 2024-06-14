@@ -1,0 +1,31 @@
+name: Continuous Integration Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build HTML
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Build HTML
+      run: |
+        # Add commands to build your HTML files here
+        # For example, if you have a build script
+        # you can run `npm run build` or `yarn build`
+        # or any other build commands you use
+
+    - name: Deploy to Hosting Service
+      # Add steps to deploy your built HTML files to your hosting service
+      # This can vary depending on your hosting setup
+      # For example, if you're deploying to GitHub Pages, you might use the `peaceiris/actions-gh-pages` action
+
