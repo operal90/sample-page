@@ -19,13 +19,11 @@ jobs:
       
     - name: Build HTML
       run: |
-        # Add commands to build your HTML files here
-        # For example, if you have a build script
-        # you can run `npm run build` or `yarn build`
-        # or any other build commands you use
+        # Add build commands if needed
+        # For example: npm run build or yarn build
 
-    - name: Deploy to Hosting Service
-      # Add steps to deploy your built HTML files to your hosting service
-      # This can vary depending on your hosting setup
-      # For example, if you're deploying to GitHub Pages, you might use the `peaceiris/actions-gh-pages` action
-
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
