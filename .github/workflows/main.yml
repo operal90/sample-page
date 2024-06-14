@@ -1,29 +1,27 @@
-name: Continuous Integration Workflow
+name: Deploy to SSH Server
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
 
 jobs:
-  build:
-    name: Build HTML
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-      
-    - name: Build HTML
-      run: |
-        # Add build commands if needed
-        # For example: npm run build or yarn build
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist
+      - name: Install SSH key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 194.163.149.51 >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy to SSH
+        run: |
+          ssh ope@194.163.149.51 "mkdir -p /var/www/ope"
+          scp -r path/to/local/files/* ope@194.163.149.51:/var/www/html/
